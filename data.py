@@ -123,7 +123,9 @@ if __name__ == '__main__':
     opts = make_opts("Excel/")
     print_options(opts)
     print("----------------")
-    opt_d = input("请选择目录: ")
+    opt_d = input("请选择目录(0: 选择最新的目录): ")
+    if int(opt_d) == 0:
+        opt_d = opts.__len__()
     if int(opt_d) in opts:
         print("-------------------------------")
         file_opts = make_opts(excel_path + opts[int(opt_d)])
