@@ -75,6 +75,10 @@ def func(interval):
                       row=2, col=2)
 
         fig.update_layout(height=800, width=1200, title_text="三大盘指数可视化面板")
+        if time.strftime("%H:%M") == "11:30":
+            fig.write_image(time.strftime("%Y-%m-%d") + "/Morning.png")
+        if time.strftime("%H:%M") == "15:00":
+            fig.write_image(time.strftime("%Y-%m-%d") + "/Afternoon.png")
         return fig
     func(interval)
 
