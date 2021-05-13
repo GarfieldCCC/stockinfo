@@ -12,7 +12,7 @@ shang_zx, shang_zy = [], []
 shen_zx, shen_zy = [], []
 cyb_x, cyb_y = [], []
 itv = []
-second = 10
+second = 5
 
 
 def current_time_between(start_time, end_time):
@@ -62,17 +62,37 @@ def func(interval):
             rows=2, cols=2,
             subplot_titles=("上证指数", "深证成指", "创业板R", "三大盘"))
 
+        print(shang_zx[0], shang_zx[-1], shang_zy[0], shang_zy[-1])
+
         fig.add_trace(go.Scatter(x=shang_zx, y=shang_zy, name="上证指数"),
-                      row=1, col=1)
+                      row=[1, 2], col=[1, 2])
+
+        fig.add_trace(go.Scatter(x=[shang_zx[0], shang_zx[-1]], y=[shang_zy[0], shang_zy[-1]], name="首末指数",
+                                 line=dict(
+                                     color="red" if shang_zy[0] < shang_zy[-1] else "green",
+                                     width=2,
+                                     dash='dash'
+                                 )), row=1, col=1)
 
         fig.add_trace(go.Scatter(x=shen_zx, y=shen_zy, name="深证成指"),
-                      row=1, col=2)
+                      row=[1, 2], col=[2, 2])
+
+        fig.add_trace(go.Scatter(x=[shen_zx[0], shen_zx[-1]], y=[shen_zy[0], shen_zy[-1]], name="首末指数",
+                                 line=dict(
+                                     color="red" if shen_zy[0] < shen_zy[-1] else "green",
+                                     width=2,
+                                     dash='dash'
+                                 )), row=1, col=2)
 
         fig.add_trace(go.Scatter(x=cyb_x, y=cyb_y, name="创业板R"),
-                      row=2, col=1)
+                      row=[2, 2], col=[1, 2])
 
-        fig.add_trace(go.Scatter(x=[4000, 5000, 6000], y=[7000, 8000, 9000]),
-                      row=2, col=2)
+        fig.add_trace(go.Scatter(x=[cyb_x[0], cyb_x[-1]], y=[cyb_y[0], cyb_y[-1]], name="首末指数",
+                                 line=dict(
+                                     color="red" if cyb_y[0] < cyb_y[-1] else "green",
+                                     width=2,
+                                     dash='dash'
+                                 )), row=2, col=1)
 
         fig.update_layout(height=800, width=1200, title_text="三大盘指数可视化面板")
         if time.strftime("%H:%M") == "11:30":
