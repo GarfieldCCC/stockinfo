@@ -12,7 +12,7 @@ shang_zx, shang_zy = [], []
 shen_zx, shen_zy = [], []
 cyb_x, cyb_y = [], []
 itv = []
-second = 5
+second = 10
 
 
 def current_time_between(start_time, end_time):
@@ -96,9 +96,9 @@ def func(interval):
 
         fig.update_layout(height=800, width=1200, title_text="三大盘指数可视化面板")
         if time.strftime("%H:%M") == "11:30":
-            fig.write_image(time.strftime("%Y-%m-%d") + "/Morning.png")
+            fig.write_image("Excel/" + time.strftime("%Y-%m-%d") + "/Morning.png")
         if time.strftime("%H:%M") == "15:00":
-            fig.write_image(time.strftime("%Y-%m-%d") + "/Afternoon.png")
+            fig.write_image("Excel/" + time.strftime("%Y-%m-%d") + "/Afternoon.png")
         return fig
     func(interval)
 
