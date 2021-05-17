@@ -29,6 +29,18 @@ def current_time_between(start_time, end_time):
     return start_time < time.strftime("%H:%M") < end_time
 
 
+def color(dig):
+    """
+        判断当前时间是否在一个时间区间内
+
+        :param dig: 起始时间, "%H:%M"
+        :type dig: double
+        :return: CSS字典
+        :rtype: dict
+        """
+    return {'color': 'red'} if dig >= 0 else {'color': 'green'}
+
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -59,21 +71,21 @@ def data(interval):
                  html.Th('创业板R')]),
 
         html.Tr([html.Td("时段最高点"),
-                 html.Td(max_shang),
-                 html.Td(max_shen),
-                 html.Td(max_cyb)]),
+                 html.Td(max_shang, style=color(max_shang)),
+                 html.Td(max_shen, style=color(max_shen)),
+                 html.Td(max_cyb, style=color(max_cyb))]),
         html.Tr([html.Td("时段最低点"),
-                 html.Td(min_shang),
-                 html.Td(min_shen),
-                 html.Td(min_cyb)]),
+                 html.Td(min_shang, style=color(min_shang)),
+                 html.Td(min_shen, style=color(min_shen)),
+                 html.Td(min_cyb, style=color(min_cyb))]),
         html.Tr([html.Td("涨/跌幅"),
-                 html.Td(ts.get_index().iloc[0]['change']),
-                 html.Td(ts.get_index().iloc[12]['change']),
-                 html.Td(ts.get_index().iloc[-1]['change'])]),
+                 html.Td(ts.get_index().iloc[0]['change'], style=color(ts.get_index().iloc[0]['change'])),
+                 html.Td(ts.get_index().iloc[12]['change'], style=color(ts.get_index().iloc[12]['change'])),
+                 html.Td(ts.get_index().iloc[-1]['change'], style=color(ts.get_index().iloc[-1]['change']))]),
         html.Tr([html.Td("首尾指数差"),
-                 html.Td(shang_zy[-1] - shang_zy[0]),
-                 html.Td(shen_zy[-1] - shen_zy[0]),
-                 html.Td(cyb_y[-1] - cyb_y[0])])
+                 html.Td(shang_zy[-1] - shang_zy[0], style=color(shang_zy[-1] - shang_zy[0])),
+                 html.Td(shen_zy[-1] - shen_zy[0], style=color(shen_zy[-1] - shen_zy[0])),
+                 html.Td(cyb_y[-1] - cyb_y[0], style=color(cyb_y[-1] - cyb_y[0]))])
     ])])
 
 
