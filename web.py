@@ -36,12 +36,45 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(
     [html.H3(datetime.datetime.now().strftime("%Y-%m-%d"), id="now"),
      dcc.Graph(id='shang'),
+     html.Div(id='container'),
      dcc.Interval(
          id='interval',
          interval=second * 1000,
          n_intervals=0
      )]
 )
+
+
+@app.callback(Output("container", "children"), Input("interval", "n_intervals"))
+def data(interval):
+    itv.append(interval)
+    max_shang, min_shang = max(shang_zy), min(shang_zy)
+    max_shen, min_shen = max(shen_zy), min(shen_zy)
+    max_cyb, min_cyb = max(cyb_y), min(cyb_y)
+
+    return html.Div([html.Table([
+        html.Tr([html.Th('数据/指数'),
+                 html.Th('上证指数'),
+                 html.Th('深证成指'),
+                 html.Th('创业板R')]),
+
+        html.Tr([html.Td("时段最高点"),
+                 html.Td(max_shang),
+                 html.Td(max_shen),
+                 html.Td(max_cyb)]),
+        html.Tr([html.Td("时段最低点"),
+                 html.Td(min_shang),
+                 html.Td(min_shen),
+                 html.Td(min_cyb)]),
+        html.Tr([html.Td("涨/跌幅"),
+                 html.Td(ts.get_index().iloc[0]['change']),
+                 html.Td(ts.get_index().iloc[12]['change']),
+                 html.Td(ts.get_index().iloc[-1]['change'])]),
+        html.Tr([html.Td("首尾指数差"),
+                 html.Td(shang_zy[-1] - shang_zy[0]),
+                 html.Td(shen_zy[-1] - shen_zy[0]),
+                 html.Td(cyb_y[-1] - cyb_y[0])])
+    ])])
 
 
 @app.callback(Output("shang", "figure"), Input("interval", "n_intervals"))
@@ -52,17 +85,15 @@ def func(interval):
         df = ts.get_index()
         t = time.strftime("%H:%M:%S")
         shang_zx.append(t)
-        shang_zy.append(df.iloc[0]['change'])
+        shang_zy.append(df.iloc[0]['close'])
         shen_zx.append(t)
-        shen_zy.append(df.iloc[12]['change'])
+        shen_zy.append(df.iloc[12]['close'])
         cyb_x.append(t)
-        cyb_y.append(df.iloc[-1]['change'])
+        cyb_y.append(df.iloc[-1]['close'])
 
         fig = make_subplots(
             rows=2, cols=2,
             subplot_titles=("上证指数", "深证成指", "创业板R", "三大盘"))
-
-        print(shang_zx[0], shang_zx[-1], shang_zy[0], shang_zy[-1])
 
         fig.add_trace(go.Scatter(x=shang_zx, y=shang_zy, name="上证指数"),
                       row=[1, 2], col=[1, 2])
