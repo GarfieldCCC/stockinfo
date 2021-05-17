@@ -31,14 +31,52 @@ def current_time_between(start_time, end_time):
 
 def color(dig):
     """
-        判断当前时间是否在一个时间区间内
+    判断当前时间是否在一个时间区间内
 
-        :param dig: 起始时间, "%H:%M"
-        :type dig: double
-        :return: CSS字典
-        :rtype: dict
-        """
+    :param dig: 起始时间, "%H:%M"
+    :type dig: double
+    :return: CSS字典
+    :rtype: dict
+    """
     return {'color': 'red'} if dig >= 0 else {'color': 'green'}
+
+
+def max_increase(list_):
+    """
+    最大上涨数
+
+    :param list_: 指数列表
+    :type list_: list
+    :return: 差值
+    :rtype: double
+    """
+    if list_.__len__() <= 1:
+        return 0
+    ll = list_[0]
+    bb = 0
+    for i in range(1, list_.__len__()):
+        bb = max(bb, list_[i] - ll)
+        ll = min(ll, list_[i])
+    return bb
+
+
+def max_decrease(list_):
+    """
+    最大下跌数
+
+    :param list_: 指数列表
+    :type list_: list
+    :return: 差值
+    :rtype: double
+    """
+    if list_.__len__() <= 1:
+        return 0
+    ll = list_[0]
+    bb = 0
+    for i in range(1, list_.__len__()):
+        bb = min(bb, list_[i] - ll)
+        ll = max(ll, list_[i])
+    return bb
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -85,7 +123,15 @@ def data(interval):
         html.Tr([html.Td("首尾指数差"),
                  html.Td(shang_zy[-1] - shang_zy[0], style=color(shang_zy[-1] - shang_zy[0])),
                  html.Td(shen_zy[-1] - shen_zy[0], style=color(shen_zy[-1] - shen_zy[0])),
-                 html.Td(cyb_y[-1] - cyb_y[0], style=color(cyb_y[-1] - cyb_y[0]))])
+                 html.Td(cyb_y[-1] - cyb_y[0], style=color(cyb_y[-1] - cyb_y[0]))]),
+        html.Tr([html.Td("最大涨幅"),
+                 html.Td(max_increase(shang_zy)),
+                 html.Td(max_increase(shen_zy)),
+                 html.Td(max_increase(cyb_y))]),
+        html.Tr([html.Td("最大跌幅"),
+                 html.Td(max_decrease(shang_zy)),
+                 html.Td(max_decrease(shen_zy)),
+                 html.Td(max_decrease(cyb_y))])
     ])])
 
 
