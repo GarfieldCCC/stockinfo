@@ -121,17 +121,17 @@ def data(interval):
                  html.Td(ts.get_index().iloc[12]['change'], style=color(ts.get_index().iloc[12]['change'])),
                  html.Td(ts.get_index().iloc[-1]['change'], style=color(ts.get_index().iloc[-1]['change']))]),
         html.Tr([html.Td("首尾指数差"),
-                 html.Td(shang_zy[-1] - shang_zy[0], style=color(shang_zy[-1] - shang_zy[0])),
-                 html.Td(shen_zy[-1] - shen_zy[0], style=color(shen_zy[-1] - shen_zy[0])),
-                 html.Td(cyb_y[-1] - cyb_y[0], style=color(cyb_y[-1] - cyb_y[0]))]),
+                 html.Td(round(shang_zy[-1] - shang_zy[0], 4), style=color(shang_zy[-1] - shang_zy[0])),
+                 html.Td(round(shen_zy[-1] - shen_zy[0], 4), style=color(shen_zy[-1] - shen_zy[0])),
+                 html.Td(round(cyb_y[-1] - cyb_y[0], 4), style=color(cyb_y[-1] - cyb_y[0]))]),
         html.Tr([html.Td("最大涨幅"),
-                 html.Td(max_increase(shang_zy)),
-                 html.Td(max_increase(shen_zy)),
-                 html.Td(max_increase(cyb_y))]),
+                 html.Td(round(max_increase(shang_zy), 4)),
+                 html.Td(round(max_increase(shen_zy), 4)),
+                 html.Td(round(max_increase(cyb_y), 4))]),
         html.Tr([html.Td("最大跌幅"),
-                 html.Td(max_decrease(shang_zy)),
-                 html.Td(max_decrease(shen_zy)),
-                 html.Td(max_decrease(cyb_y))])
+                 html.Td(round(max_decrease(shang_zy), 4)),
+                 html.Td(round(max_decrease(shen_zy), 4)),
+                 html.Td(round(max_decrease(cyb_y), 4))])
     ])])
 
 
