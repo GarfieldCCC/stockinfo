@@ -1,3 +1,4 @@
+import os
 import dash
 import time
 import plotly
@@ -14,6 +15,17 @@ shen_zx, shen_zy = [], []
 cyb_x, cyb_y = [], []
 itv = []
 second = 10
+
+
+def make_dir(dirs):
+    """
+    如果目录不存在, 新建目录
+
+    :param dirs: 目录
+    :type dirs: str
+    """
+    if not os.path.exists(dirs):
+        os.makedirs(dirs)
 
 
 def current_time_between(start_time, end_time):
@@ -194,4 +206,5 @@ def func(interval):
 
 
 if __name__ == '__main__':
+    make_dir(dirs="Excel/" + time.strftime("%Y-%m-%d"))
     app.run_server(debug=True)
