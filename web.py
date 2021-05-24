@@ -198,9 +198,9 @@ def func(interval):
 
         fig.update_layout(height=800, width=1200, title_text="三大盘指数可视化面板")
         if time.strftime("%H:%M") == "11:30":
-            plotly.offline.plot(fig, "Excel/" + time.strftime("%Y-%m-%d") + "/Morning.html")
+            plotly.offline.plot(fig, filename="Excel/" + time.strftime("%Y-%m-%d") + "/Morning.html")
         if time.strftime("%H:%M") == "15:00":
-            plotly.offline.plot(fig, "Excel/" + time.strftime("%Y-%m-%d") + "/Afternoon.html")
+            plotly.offline.plot(fig, filename="Excel/" + time.strftime("%Y-%m-%d") + "/Afternoon.html")
         return fig
     func(interval)
 
